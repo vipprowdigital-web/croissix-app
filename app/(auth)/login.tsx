@@ -10,14 +10,12 @@ import {
 } from "react-native";
 // Assets
 import StartBg from "@/assets/images/bg/auth/star_bg.svg";
-import GoogleIcon from "@/assets/images/logo/google.svg";
 // BNA UI
 import { Button as BNAButton } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Text as BNAText } from "@/components/ui/text";
 import { View as BNAView } from "@/components/ui/view";
 import { Input } from "@/components/ui/input";
-import { Checkbox as BNACheckbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
@@ -43,13 +41,13 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   const text = useColor("text");
   const textMuted = useColor("textMuted");
-  const primary = useColor("primary");
+  // const primary = useColor("primary");
 
   const emailError =
     email && !email.includes("@") ? "Please enter a valid email address" : "";
@@ -61,7 +59,7 @@ export default function LoginPage() {
   const translateY = useSharedValue(0);
   useEffect(() => {
     translateY.value = withTiming(-20, { duration: 6000 });
-  }, []);
+  }, [translateY]);
 
   async function onLogin() {
     if (!email.trim().toLowerCase() || !password.trim()) {
@@ -239,7 +237,7 @@ export default function LoginPage() {
                     }}
                   >
                     <BNAText style={{ color: "white", fontWeight: "bold" }}>
-                      Login
+                      {loading ? "Logging..." : "Login"}
                     </BNAText>
                   </LinearGradient>
                 </BNAButton>

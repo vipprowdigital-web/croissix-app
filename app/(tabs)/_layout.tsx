@@ -80,7 +80,7 @@ function TabIcon({
 
 export default function TabsLayout() {
   const text = useColor("text");
-  const link = useColor("link");
+  // const link = useColor("link");
   const textMuted = useColor("textMuted");
   const primary = useColor("primary");
   const primaryForeground = useColor("primaryForeground");

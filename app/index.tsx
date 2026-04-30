@@ -1,11 +1,10 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
 import StartBg from "@/assets/images/bg/auth/star_bg.svg";
 import { useColor } from "@/hooks/useColor";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
 
 const features = [
   {
@@ -49,8 +48,8 @@ export default function Page() {
         router.replace("/(auth)/login");
       }, 1000);
     });
-  }, []);
-  const text = useColor("text");
+  }, [fadeAnim]);
+  // const text = useColor("text");
   const textMuted = useColor("textMuted");
   return (
     <View style={{ flex: 1 }} className="justify-center items-center p-12">

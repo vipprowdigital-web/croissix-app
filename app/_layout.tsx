@@ -2,7 +2,7 @@
 import { Colors } from "@/theme/colors";
 import { ThemeProvider } from "@/theme/theme-provider";
 import * as NavigationBar from "expo-navigation-bar";
-import { router, Stack, useRouter } from "expo-router";
+import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { setBackgroundColorAsync } from "expo-system-ui";
@@ -17,9 +17,7 @@ import { ToastProvider } from "@/components/ui/toast";
 import AuthGuard from "@/components/AuthGuard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as Linking from "expo-linking";
-import SubscriptionGuard from "@/components/SubscriptionGuard";
 import { clearToken, getToken } from "@/services/auth.util";
-import { ThunkDispatch, UnknownAction, Dispatch } from "@reduxjs/toolkit";
 import { logout } from "@/services/auth.service";
 import { refreshAccessToken } from "@/services/(auth)/refreshToken.service";
 
@@ -128,7 +126,7 @@ export default function RootLayout() {
     });
 
     return () => sub.remove();
-  }, [router]);
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

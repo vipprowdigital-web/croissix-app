@@ -11,9 +11,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { fetch as expoFetch } from "expo/fetch";
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FRONTEND_URL } from "@/config/.env";
-import React from "react";
 import SubscriptionGate from "@/components/SubscriptionGate";
 import { useSubscription } from "@/hooks/useSubscription";
 import { useFreeTrialStatus } from "@/hooks/useFreeTrialStatus";
