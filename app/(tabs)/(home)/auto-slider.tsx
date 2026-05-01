@@ -13,6 +13,7 @@ import { useColor } from "@/hooks/useColor";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
+import React from "react";
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width - 50;

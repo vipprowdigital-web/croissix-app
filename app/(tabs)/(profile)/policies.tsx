@@ -4,6 +4,7 @@ import { privacyPolicies, termsAndConditions } from "../(home)/seed";
 import { AccordionItem } from "@/components/ui/accordian-item";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
+import React from "react";
 
 export default function Policies() {
   const text = useColor("text");

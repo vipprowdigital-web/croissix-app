@@ -10,7 +10,6 @@ import { ScrollView } from "@/components/ui/scroll-view";
 import { Button } from "@/components/ui/button";
 import { useColor } from "@/hooks/useColor";
 import { RootState } from "@/store";
-import StartBg from "@/assets/images/bg/auth/star_bg.svg";
 import { Ionicons } from "@expo/vector-icons";
 import React, {
   useCallback,
@@ -35,12 +34,10 @@ import {
   StyleSheet,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Check, Feather, Link as LinkIcon } from "lucide-react-native";
-import { setUser } from "@/store/slices/user.slice";
+import { Check, Link as LinkIcon } from "lucide-react-native";
 import { GoogleG } from "@/components/ui/icons";
 import { Href, useRouter } from "expo-router";
 import { Footer } from "@/components/ui/footer";
-import { toggleTheme } from "@/store/slices/theme.slice";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetView,
@@ -290,13 +287,13 @@ export default function ProfileScreen() {
   const primaryForeground = useColor("primaryForeground");
   const user = useSelector((s: RootState) => s.auth.user);
   const token = useSelector((s: RootState) => s.auth.token);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const colorScheme = useSelector((state: RootState) => state.theme.mode);
   // const location = useSelector((g: RootState) => g.google.location);
   const link = useColor("link");
   const text = useColor("text");
   const green = useColor("green");
-  const yellow = useColor("yellow");
+  // const yellow = useColor("yellow");
   const indigo = useColor("indigo");
   const textMuted = useColor("textMuted");
   const shadowColor = "#9f57f5";

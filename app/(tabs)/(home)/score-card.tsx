@@ -41,6 +41,7 @@ import Animated, {
   interpolate,
   useDerivedValue,
 } from "react-native-reanimated";
+import React from "react";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);

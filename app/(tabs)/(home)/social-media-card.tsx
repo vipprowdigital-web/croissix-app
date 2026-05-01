@@ -192,7 +192,12 @@ const SocialMediaCard = ({
               style={{
                 backgroundColor: isNotified ? green + "50" : details.color,
               }}
-              onPress={handleNotify}
+              onPress={() => {
+                setIsNotified(true);
+                setTimeout(() => {
+                  setIsNotified(false);
+                }, 1500);
+              }}
             >
               <Bell
                 size={20}
@@ -209,7 +214,12 @@ const SocialMediaCard = ({
           ) : (
             <TouchableOpacity
               className="flex-row items-center justify-center py-4 rounded-3xl shadow-lg"
-              onPress={handleNotify}
+              onPress={() => {
+                setIsNotified(true);
+                setTimeout(() => {
+                  setIsNotified(false);
+                }, 1500);
+              }}
             >
               <LinearGradient
                 colors={

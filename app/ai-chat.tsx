@@ -8,6 +8,7 @@ import {
   Platform,
   // FlatList,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { fetch as expoFetch } from "expo/fetch";
@@ -223,10 +224,15 @@ export default function AIChat() {
   const { isActive, isLoading: subLoading, isExpired } = useSubscription();
   const { trialExpired } = useFreeTrialStatus();
 
-  useEffect(() => {
-    if (subLoading) return;
-  }, [isActive, isExpired, trialExpired, subLoading]);
-  if (!isActive)
+  // useEffect(() => {
+  //   if (subLoading) return;
+  // }, [isActive, isExpired, trialExpired, subLoading]);
+  if (subLoading) {
+    return <ActivityIndicator color={link} />;
+  }
+  const hasValidSubscription = isActive && !isExpired;
+  const canAccess = hasValidSubscription || !trialExpired;
+  if (!canAccess)
     return (
       <View className="flex-1 justify-center">
         <SubscriptionGate />

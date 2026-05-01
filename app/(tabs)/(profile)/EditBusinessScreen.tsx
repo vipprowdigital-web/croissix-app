@@ -18,7 +18,6 @@ import {
   Modal,
 } from "react-native";
 import {
-  AntDesign,
   Feather,
   FontAwesome5,
   Ionicons,

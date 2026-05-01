@@ -11,7 +11,6 @@ import {
 import {
   Ionicons,
   MaterialCommunityIcons,
-  Feather,
   FontAwesome,
 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";

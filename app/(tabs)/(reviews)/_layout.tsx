@@ -1,8 +1,9 @@
 import { Stack } from "expo-router";
 import { useColor } from "@/hooks/useColor";
-import { Platform, useColorScheme } from "react-native";
-import { Text } from "@/components/ui/text";
+import { useColorScheme } from "react-native";
+// import { Text } from "@/components/ui/text";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
+import React from "react";
 
 export default function ReviewsLayout() {
   const theme = useColorScheme();

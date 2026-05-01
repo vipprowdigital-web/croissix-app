@@ -5,6 +5,7 @@ import { Platform, useColorScheme } from "react-native";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { useColor } from "@/hooks/useColor";
 import { Text } from "@/components/ui/text";
+import React from "react";
 
 export default function ProfileLayout() {
   const theme = useColorScheme();

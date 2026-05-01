@@ -2,6 +2,7 @@ import { useColor } from "@/hooks/useColor";
 import { View, ScrollView, Text, StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Redirect, useRouter } from "expo-router";
+import React from "react";
 
 interface Content {
   id: string;

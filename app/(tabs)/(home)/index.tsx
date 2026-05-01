@@ -10,6 +10,7 @@ import {
   Pressable,
   Animated,
   Easing,
+  ActivityIndicator,
 } from "react-native";
 import Reanimated, {
   useAnimatedProps,
@@ -753,7 +754,16 @@ export default function HomeScreen() {
     outputRange: ["0deg", "360deg"],
   });
 
-  if (!isActive && trialExpired) return <SubscriptionGate />;
+  // if (!isActive && trialExpired) return <SubscriptionGate />;
+  if (loading) {
+    return <ActivityIndicator color={link} />;
+  }
+  const hasValidSubscription = isActive && !isExpired;
+  const canAccess = hasValidSubscription || !trialExpired;
+
+  if (!canAccess) {
+    return <SubscriptionGate />;
+  }
 
   return (
     <ScrollView
@@ -1119,13 +1129,11 @@ export default function HomeScreen() {
           </View>
 
           {/* Quick Actions */}
-          {isActive && (
-            <HorizontalList
-              list={quickActions}
-              heading="Quick Actions"
-              headerRequired={true}
-            />
-          )}
+          <HorizontalList
+            list={quickActions}
+            heading="Quick Actions"
+            headerRequired={true}
+          />
 
           {metrics.length > 0 && (
             <>

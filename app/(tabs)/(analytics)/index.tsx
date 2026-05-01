@@ -6,6 +6,7 @@ import {
   Dimensions,
   Animated,
   Easing,
+  ActivityIndicator,
 } from "react-native";
 import { useColor } from "@/hooks/useColor";
 import { GoogleG } from "@/components/ui/icons";
@@ -566,10 +567,19 @@ export default function AnalyticsScreen() {
   const { isActive, isLoading: loading, isExpired } = useSubscription();
   const { trialExpired } = useFreeTrialStatus();
 
-  useEffect(() => {
-    if (loading) return;
-  }, [isActive, isExpired, trialExpired, loading]);
-  if (!isActive) return <SubscriptionGate />;
+  // useEffect(() => {
+  //   if (loading) return;
+  // }, [isActive, isExpired, trialExpired, loading]);
+  // if (!isActive) return <SubscriptionGate />;
+  if (loading) {
+    return <ActivityIndicator color={link} />;
+  }
+  const hasValidSubscription = isActive && !isExpired;
+  const canAccess = hasValidSubscription || !trialExpired;
+
+  if (!canAccess) {
+    return <SubscriptionGate />;
+  }
 
   return (
     <ScrollView

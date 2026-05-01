@@ -9,7 +9,7 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function HomeLayout() {
   const theme = useColorScheme();
   const text = useColor("text");
-  const link = useColor("link");
+  // const link = useColor("link");
   const textMuted = useColor("textMuted");
   const background = useColor("background");
 
