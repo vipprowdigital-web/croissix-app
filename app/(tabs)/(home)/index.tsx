@@ -604,9 +604,9 @@ export default function HomeScreen() {
   const { isActive, isLoading: loading, isExpired } = useSubscription();
   const { trialExpired } = useFreeTrialStatus();
 
-  useEffect(() => {
-    if (loading) return;
-  }, [isActive, isExpired, trialExpired, loading]);
+  // useEffect(() => {
+  //   if (loading) return;
+  // }, [isActive, isExpired, trialExpired, loading]);
 
   const categories = ["Digital", "Software", "Website", "SEO", "Branding"];
 
@@ -756,6 +756,9 @@ export default function HomeScreen() {
 
   // if (!isActive && trialExpired) return <SubscriptionGate />;
   if (loading) {
+    return <ActivityIndicator color={link} />;
+  }
+  if (userLoading) {
     return <ActivityIndicator color={link} />;
   }
   const hasValidSubscription = isActive && !isExpired;
