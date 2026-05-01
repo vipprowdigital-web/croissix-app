@@ -15,11 +15,12 @@ import { Provider, useSelector } from "react-redux";
 import { RootState, store } from "@/store";
 import { ToastProvider } from "@/components/ui/toast";
 import AuthGuard from "@/components/AuthGuard";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import * as Linking from "expo-linking";
 import { clearToken, getToken } from "@/services/auth.util";
 import { logout } from "@/services/auth.service";
 import { refreshAccessToken } from "@/services/(auth)/refreshToken.service";
+import { queryClient } from "@/providers/queryClient";
 
 SplashScreen.setOptions({
   duration: 200,
@@ -62,8 +63,6 @@ function RootLayoutNav() {
     </ThemeProvider>
   );
 }
-
-const queryClient = new QueryClient();
 
 export default function RootLayout() {
   useEffect(() => {

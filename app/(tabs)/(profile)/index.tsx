@@ -48,6 +48,8 @@ import Svg, { Rect } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { updateUser } from "@/store/slices/auth.slice";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUser } from "@/services/(user)/user.service";
+import { queryClient } from "@/providers/queryClient";
 
 type SettingItem = {
   icon: keyof typeof Ionicons.glyphMap;
@@ -82,7 +84,7 @@ function LocationRow({
   const text = useColor("text");
   const green = useColor("green");
   const textMuted = useColor("textMuted");
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const handleLink = async () => {
     // console.log("Inside handle link");
@@ -286,6 +288,7 @@ export default function ProfileScreen() {
   const primary = useColor("primary");
   const primaryForeground = useColor("primaryForeground");
   const user = useSelector((s: RootState) => s.auth.user);
+  // const { data: user, isLoading: userLoding } = useUser();
   const token = useSelector((s: RootState) => s.auth.token);
   // const dispatch = useDispatch();
   const colorScheme = useSelector((state: RootState) => state.theme.mode);
@@ -312,7 +315,7 @@ export default function ProfileScreen() {
   const locationId = user?.googleLocationId;
   const locationName = user?.googleLocationName;
 
-  const base = "https://app.croissix.com";
+  const base = "https://ai.croissix.com";
 
   const visibleLocations = useMemo(() => {
     if (user?.googleLocationId) {
@@ -563,12 +566,19 @@ export default function ProfileScreen() {
     }, 3000);
   }, [linkCopied]);
 
+  if (!token || !user) {
+    return <ActivityIndicator color={link} style={{ flex: 1 }} />;
+  }
+  // if (userLoding) {
+  //   return <ActivityIndicator color={link} />;
+  // }
+
   return (
     <GestureHandlerRootView className="flex-1">
       <View className="flex-1">
         {error && (
           <View
-            className={`rounded-2xl p-4 mt-5 flex-row items-start border mb-4`}
+            className={`rounded-2xl p-4 mt-5 flex-row items-start border mb-4 mx-7`}
             style={{ backgroundColor: red + "30", borderColor: red }}
           >
             <View className="flex-1">
@@ -633,7 +643,7 @@ export default function ProfileScreen() {
                         }}
                         className="text-white"
                       >
-                        {user?.name[0] || "N/A"}
+                        {user?.name?.[0] || "N/A"}
                       </Text>
                     </AvatarFallback>
                   </Avatar>
@@ -865,7 +875,7 @@ export default function ProfileScreen() {
             >
               <View
                 style={{
-                  backgroundColor: useColor("red") + "20",
+                  backgroundColor: red + "20",
                   paddingLeft: 15,
                   paddingVertical: 10,
                   borderRadius: 15,
@@ -874,18 +884,14 @@ export default function ProfileScreen() {
                 className="flex flex-row justify-start items-center gap-5"
               >
                 <View
-                  // style={{ backgroundColor: useColor("red") + "20" }}
+                  // style={{ backgroundColor: red + "20" }}
                   className="p-2 rounded-xl"
                 >
-                  <Ionicons
-                    name="log-out-outline"
-                    size={25}
-                    color={useColor("red")}
-                  />
+                  <Ionicons name="log-out-outline" size={25} color={red} />
                 </View>
                 <Text
                   style={{
-                    color: useColor("red"),
+                    color: red,
                     fontSize: 16,
                   }}
                 >

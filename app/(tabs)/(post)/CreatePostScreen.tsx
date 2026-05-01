@@ -61,6 +61,7 @@ import { Image } from "expo-image";
 import { useSubscription } from "@/hooks/useSubscription";
 import { useFreeTrialStatus } from "@/hooks/useFreeTrialStatus";
 import SubscriptionGate from "@/components/SubscriptionGate";
+import { NotConnectedBanner } from "@/components/ui/NotConnectedBanner";
 
 const link = "#9f57f5";
 const text = "#fff";
@@ -1407,7 +1408,8 @@ const CreatePostScreen = () => {
   const green = useColor("green");
   const router = useRouter();
   const theme = useSelector((state: RootState) => state.theme.mode);
-  const { data: user, isLoading: userLoading } = useUser();
+  // const { data: user, isLoading: userLoading } = useUser();
+  const user = useSelector((state: RootState) => state.auth.user);
   const businessName = user?.googleLocationName ?? "";
   const businessCategory = user?.businessCategory ?? "";
   // const { subscription, isLoading: loading, isActive } = useSubscription();
@@ -1710,14 +1712,30 @@ const CreatePostScreen = () => {
   //   if (loading) return;
   // }, [isActive, isExpired, trialExpired, loading]);
   // if (!isActive) return <SubscriptionGate />;
+  // if (userLoading) {
+  //   return <ActivityIndicator color={link} />;
+  // }
   if (loading) {
-    return <ActivityIndicator color={link} />;
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text
+          className="text-md font-bold text-center"
+          style={{ color: textMuted }}
+        >
+          Loading...
+        </Text>
+      </View>
+    );
   }
   const hasValidSubscription = isActive && !isExpired;
   const canAccess = hasValidSubscription || !trialExpired;
 
   if (!canAccess) {
     return <SubscriptionGate />;
+  }
+
+  if (!user?.googleLocationId) {
+    return <NotConnectedBanner isDark={theme === "dark"} />;
   }
 
   return (

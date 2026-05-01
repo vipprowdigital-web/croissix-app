@@ -7,10 +7,11 @@ import {
   createSubscriptionApi,
   verifySubscriptionApi,
 } from "@/api/subscription.api";
+import { queryClient } from "@/providers/queryClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useSubscriptionActions = () => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const create = useMutation({
     mutationFn: createSubscriptionApi,

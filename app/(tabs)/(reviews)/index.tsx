@@ -585,10 +585,10 @@ export default function ReviewsScreen() {
   const link = useColor("link");
   const yellow = useColor("yellow");
   const red = useColor("red");
-  // const user = useSelector((s: RootState) => s.auth.user);
+  const user = useSelector((s: RootState) => s.auth.user);
   const [active, setActive] = useState("All");
 
-  const { data: user, isLoading: userLoading } = useUser();
+  // const { data: user, isLoading: userLoading } = useUser();
   const isDark = useSelector((state: RootState) => state.theme.mode) === "dark";
 
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -804,7 +804,7 @@ export default function ReviewsScreen() {
     rating_high: "Rating ↑",
     rating_low: "Rating ↓",
   };
-  const isInitialLoad = userLoading || (fetching && reviews.length === 0);
+  const isInitialLoad = fetching && reviews.length === 0;
 
   const reviewMetrics = [
     {
@@ -848,8 +848,20 @@ export default function ReviewsScreen() {
   //   if (loading) return;
   // }, [isActive, isExpired, trialExpired, loading]);
   // if (!isActive && trialExpired) return <SubscriptionGate />;
+  // if (userLoading) {
+  //   return <ActivityIndicator color={link} />;
+  // }
   if (loading) {
-    return <ActivityIndicator color={link} />;
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text
+          className="text-md font-bold text-center"
+          style={{ color: textMuted }}
+        >
+          Loading...
+        </Text>
+      </View>
+    );
   }
   const hasValidSubscription = isActive && !isExpired;
   const canAccess = hasValidSubscription || !trialExpired;
@@ -905,18 +917,20 @@ export default function ReviewsScreen() {
                   </Text>
                 </View>
               </View>
-              <Pressable
-                className="w-10 h-10 rounded-xl items-center justify-center shadow-sm disabled:opacity-50"
-                style={{ backgroundColor: textMuted + "30" }}
-                onPress={refresh}
-                disabled={fetching}
-              >
-                <RotateCw
-                  size={18}
-                  color={text}
-                  className={fetching ? "animate-spin" : ""}
-                />
-              </Pressable>
+              {user?.googleLocationId && (
+                <Pressable
+                  className="w-10 h-10 rounded-xl items-center justify-center shadow-sm disabled:opacity-50"
+                  style={{ backgroundColor: textMuted + "30" }}
+                  onPress={refresh}
+                  disabled={fetching}
+                >
+                  <RotateCw
+                    size={18}
+                    color={text}
+                    className={fetching ? "animate-spin" : ""}
+                  />
+                </Pressable>
+              )}
             </View>
           </View>
           <View className="flex items-start">
@@ -935,7 +949,7 @@ export default function ReviewsScreen() {
         </View>
       )}
 
-      {!userLoading && !user?.googleLocationName && (
+      {!user?.googleLocationName && (
         <View
           className="rounded-2xl p-8 items-center border gap-1 mx-7"
           style={{

@@ -9,20 +9,29 @@ import { clearToken, getToken, decodeToken } from "@/services/auth.util";
 import { useRouter, useSegments, useRootNavigationState } from "expo-router";
 import { logout as logoutAction, setAuth } from "@/store/slices/auth.slice";
 import { refreshAccessToken } from "@/services/(auth)/refreshToken.service";
+import { User } from "@/types/user";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth,
   );
+  console.log("Inside AuthGuard");
+  console.log("User: ", user);
+
   const router = useRouter();
   const segments = useSegments();
   const dispatch = useDispatch();
   const navigationState = useRootNavigationState();
 
+  // Setting user
+  // if (!user) {
+  // console.log("User: ", user);
+  // }
+  // Setting user
+
   const [checking, setChecking] = useState(true);
   const hasRedirected = useRef(false);
 
-  console.log("Inside AuthGuard");
   // const hasAttemptedHydration = useRef(false);
 
   useEffect(() => {

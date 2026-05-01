@@ -74,6 +74,7 @@ export default function LoginPage() {
     setLoading(true);
 
     const response = await handleLogin(email, password, dispatch);
+    console.log("Response: ", response);
 
     setLoading(false);
 

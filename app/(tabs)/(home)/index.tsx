@@ -599,7 +599,8 @@ export default function HomeScreen() {
   const scrollRef = useRef<ScrollView | null>(null);
   const fbRef = useRef<View | null>(null);
   const igRef = useRef<View | null>(null);
-  const { data: user, isLoading: userLoading } = useUser();
+  // const { data: user, isLoading: userLoading } = useUser();
+  const user = useSelector((state: RootState) => state.auth.user);
   const isDark = useSelector((state: RootState) => state.theme.mode) === "dark";
   const { isActive, isLoading: loading, isExpired } = useSubscription();
   const { trialExpired } = useFreeTrialStatus();
@@ -666,7 +667,6 @@ export default function HomeScreen() {
     retry: 1,
   });
 
-  const isLoading = userLoading || (analyticsLoading && !analytics);
   const sparkData = useMemo(() => {
     return (
       analytics?.charts?.impressionsByDay?.map((d) => d.desktop + d.mobile) ??
@@ -732,7 +732,7 @@ export default function HomeScreen() {
     : [];
 
   const spinAnim = useRef(new Animated.Value(0)).current;
-
+  const isLoading = analyticsLoading && !analytics;
   useEffect(() => {
     if (isLoading) {
       Animated.loop(
@@ -758,9 +758,9 @@ export default function HomeScreen() {
   if (loading) {
     return <ActivityIndicator color={link} />;
   }
-  if (userLoading) {
-    return <ActivityIndicator color={link} />;
-  }
+  // if (!user) {
+  //   router.replace("/(auth)/login");
+  // }
   const hasValidSubscription = isActive && !isExpired;
   const canAccess = hasValidSubscription || !trialExpired;
 

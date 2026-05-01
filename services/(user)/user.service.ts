@@ -23,14 +23,14 @@ export const useUser = () => {
     retry: false,
   });
 
-  useEffect(() => {
-    // if (query.data && token) {
-    //   dispatch(setAuth({ user: query.data, token }));
-    // }
-    if (query.data) {
-      dispatch(updateUser(query.data));
-    }
-  }, [query.data, dispatch, token]);
+  // useEffect(() => {
+  //   // if (query.data && token) {
+  //   //   dispatch(setAuth({ user: query.data, token }));
+  //   // }
+  //   if (query.data) {
+  //     dispatch(updateUser(query.data));
+  //   }
+  // }, [query.data, dispatch, token]);
 
   return query;
 };

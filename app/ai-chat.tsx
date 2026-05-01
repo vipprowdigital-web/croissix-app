@@ -17,6 +17,7 @@ import { FRONTEND_URL } from "@/config/.env";
 import SubscriptionGate from "@/components/SubscriptionGate";
 import { useSubscription } from "@/hooks/useSubscription";
 import { useFreeTrialStatus } from "@/hooks/useFreeTrialStatus";
+import { router } from "expo-router";
 
 const marketingTopics = [
   {
@@ -253,6 +254,13 @@ export default function AIChat() {
           {/* Header Section */}
           <View className="flex-row items-center justify-between px-7 mt-12">
             <View className="flex-row items-center gap-5">
+              <Pressable
+                className="p-3 rounded-full"
+                style={{ backgroundColor: textMuted + "30" }}
+                onPress={() => router.back()}
+              >
+                <Ionicons name="chevron-back" size={18} color={textMuted} />
+              </Pressable>
               <Ionicons name="sparkles" size={18} color={link} />
               <View>
                 <Text className="text-md font-bold" style={{ color: text }}>
@@ -324,6 +332,7 @@ export default function AIChat() {
               {messages.map((m) => (
                 <>
                   <View
+                    key={m}
                     className="flex-row gap-2"
                     style={{
                       alignSelf: m.role === "user" ? "flex-end" : "flex-start",

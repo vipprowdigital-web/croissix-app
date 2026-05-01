@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useQueryClient } from "@tanstack/react-query";
 import { FRONTEND_URL } from "@/config/.env";
 import React from "react";
+import { queryClient } from "@/providers/queryClient";
 
 interface Props {
   visible: boolean;
@@ -21,7 +22,7 @@ interface Props {
 }
 
 export default function PaymentWebView({ visible, onClose, onSuccess }: Props) {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const hasHandledSuccess = useRef(false);
   const webViewRef = useRef<any>(null);
 

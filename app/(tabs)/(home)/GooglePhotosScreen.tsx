@@ -26,6 +26,10 @@ import { getToken } from "@/services/auth.util";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/services/(user)/user.service";
 import { FRONTEND_URL } from "@/config/.env";
+import { queryClient } from "@/providers/queryClient";
+import { NotConnectedBanner } from "@/components/ui/NotConnectedBanner";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const { width } = Dimensions.get("window");
 const columnWidth = (width - 65) / 3;
@@ -169,7 +173,6 @@ export default function GooglePhotosScreen() {
   const [isDeleting, setIsDeleting] = useState(false);
   const sheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["45%"], []);
-  const queryClient = useQueryClient();
 
   const text = useColor("text");
   const red = useColor("red");
@@ -194,6 +197,7 @@ export default function GooglePhotosScreen() {
 
   const { data: user } = useUser();
   const locationId = user?.googleLocationId ?? "";
+  const isDark = useSelector((state: RootState) => state.theme.mode) === "dark";
 
   const { data, isLoading, refetch, isFetching } = useQuery<MediaResponse>({
     queryKey: ["gbp-media", locationId],
@@ -261,6 +265,14 @@ export default function GooglePhotosScreen() {
     }
   };
 
+  // if (!locationId) {
+  //   return (
+  //     <View className="flex-row justify-center items-center w-full">
+  //       <NotConnectedBanner isDark={isDark} />
+  //     </View>
+  //   );
+  // }
+
   return (
     <GestureHandlerRootView className="flex-1">
       <View className="flex-1">
@@ -282,27 +294,29 @@ export default function GooglePhotosScreen() {
                 Google Business
               </Text>
             </View>
-            <View className="flex-row items-center">
-              <TouchableOpacity
-                className="p-2 rounded-full shadow-sm mr-3 border"
-                style={{ backgroundColor: textMuted + "30" }}
-                onPress={() => refetch()}
-              >
-                <Ionicons
-                  name="refresh"
-                  size={20}
-                  color={isFetching ? link : text}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                className="flex-row items-center px-5 py-2.5 rounded-2xl shadow-lg"
-                style={{ backgroundColor: link }}
-                onPress={() => router.push("/AddPhotosScreen")}
-              >
-                <Ionicons name="add" size={20} color="white" />
-                <Text className="text-white font-bold ml-1">Add Photo</Text>
-              </TouchableOpacity>
-            </View>
+            {locationId && (
+              <View className="flex-row items-center">
+                <TouchableOpacity
+                  className="p-2 rounded-full shadow-sm mr-3 border"
+                  style={{ backgroundColor: textMuted + "30" }}
+                  onPress={() => refetch()}
+                >
+                  <Ionicons
+                    name="refresh"
+                    size={20}
+                    color={isFetching ? link : text}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="flex-row items-center px-5 py-2.5 rounded-2xl shadow-lg"
+                  style={{ backgroundColor: link }}
+                  onPress={() => router.push("/AddPhotosScreen")}
+                >
+                  <Ionicons name="add" size={20} color="white" />
+                  <Text className="text-white font-bold ml-1">Add Photo</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
 
           <Text
@@ -399,45 +413,48 @@ export default function GooglePhotosScreen() {
           </View>
 
           {/* AI PROMO BANNER */}
-          <TouchableOpacity
-            className="mb-6 rounded-[32px] overflow-hidden"
-            onPress={() => router.push("/AddPhotosScreen")}
-          >
-            <LinearGradient
-              colors={["#2B033D", "#9f57f5"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={{
-                paddingHorizontal: 24,
-                paddingVertical: 12,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
+          {locationId && (
+            <TouchableOpacity
+              className="mb-6 rounded-[32px] overflow-hidden"
+              onPress={() => router.push("/AddPhotosScreen")}
             >
-              <View className="flex-row items-center">
-                <MaterialCommunityIcons
-                  name="brain"
-                  size={28}
-                  color="white"
-                  style={{ opacity: 0.8 }}
-                />
-                <Text className="text-white text-md font-bold ml-3">
-                  Add Photos with AI
-                </Text>
-              </View>
-              <View
-                className="px-3 py-0.5 rounded-full border flex-row items-center"
+              <LinearGradient
+                colors={["#2B033D", "#9f57f5"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
                 style={{
-                  backgroundColor: textMuted + "30",
-                  borderColor: textMuted,
+                  paddingHorizontal: 24,
+                  paddingVertical: 12,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                <FontAwesome5 name="bolt" size={10} color="white" />
-                <Text className="text-white text-xs font-bold ml-1">AI</Text>
-              </View>
-            </LinearGradient>
-          </TouchableOpacity>
+                <View className="flex-row items-center">
+                  <MaterialCommunityIcons
+                    name="brain"
+                    size={28}
+                    color="white"
+                    style={{ opacity: 0.8 }}
+                  />
+                  <Text className="text-white text-md font-bold ml-3">
+                    Add Photos
+                    {/* Add Photos with AI */}
+                  </Text>
+                </View>
+                <View
+                  className="px-3 py-0.5 rounded-full border flex-row items-center"
+                  style={{
+                    backgroundColor: textMuted + "30",
+                    borderColor: textMuted,
+                  }}
+                >
+                  <FontAwesome5 name="bolt" size={10} color="white" />
+                  <Text className="text-white text-xs font-bold ml-1">AI</Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
+          )}
 
           {/* PHOTO GRID / LIST */}
           {isLoading ? (

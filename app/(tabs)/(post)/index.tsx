@@ -37,6 +37,8 @@ import MetricCard from "@/components/ui/metricCard";
 import { useFreeTrialStatus } from "@/hooks/useFreeTrialStatus";
 import SubscriptionGate from "@/components/SubscriptionGate";
 import { useSubscription } from "@/hooks/useSubscription";
+import { queryClient } from "@/providers/queryClient";
+import { NotConnectedBanner } from "@/components/ui/NotConnectedBanner";
 
 const myPostsMetrics = [
   {
@@ -242,9 +244,9 @@ export default function ProfileScreen() {
   const textMuted = useColor("textMuted");
   // const primaryForeground = useColor("primaryForeground");
   const link = useColor("link");
-  const qc = useQueryClient();
-  // const userData = useSelector((s: RootState) => s.auth.user);
-  const { data: user, isLoading: userLoading } = useUser();
+  // const qc = useQueryClient();
+  const user = useSelector((s: RootState) => s.auth.user);
+  // const { data: user, isLoading: userLoading } = useUser();
   // const screenWidth = Dimensions.get("window").width;
   // const cardWidth = screenWidth / 2 - 33;
   const theme = useSelector((state: RootState) => state.theme.mode);
@@ -302,7 +304,7 @@ export default function ProfileScreen() {
       setPosts((prev) => prev.filter((p) => p.name !== postName));
       setDeleteTarget(null);
       // showToast("Post deleted successfully");
-      qc.invalidateQueries({ queryKey: ["google-posts"] });
+      queryClient.invalidateQueries({ queryKey: ["google-posts"] });
     },
     onError: (e: any) => {
       // showToast(e.message ?? "Delete failed");
@@ -356,7 +358,7 @@ export default function ProfileScreen() {
     return matchFilter && matchSearch;
   });
 
-  const isInitial = userLoading || (isLoading && posts.length === 0);
+  const isInitial = isLoading && posts.length === 0;
 
   const myPostsMetrics = [
     {
@@ -400,14 +402,30 @@ export default function ProfileScreen() {
   //   if (loading) return;
   // }, [isActive, isExpired, trialExpired, loading]);
   // if (!isActive) return <SubscriptionGate />;
+  // if (!user) {
+  //   router.replace("/(auth)/login");
+  // }
   if (loading) {
-    return <ActivityIndicator color={link} />;
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text
+          className="text-md font-bold text-center"
+          style={{ color: textMuted }}
+        >
+          Loading...
+        </Text>
+      </View>
+    );
   }
   const hasValidSubscription = isActive && !isExpired;
   const canAccess = hasValidSubscription || !trialExpired;
 
   if (!canAccess) {
     return <SubscriptionGate />;
+  }
+
+  if (user?.googleLocationId) {
+    return <NotConnectedBanner isDark={theme === "dark"} />;
   }
 
   const renderHeader = () => (
@@ -474,7 +492,7 @@ export default function ProfileScreen() {
           <Ionicons
             name="wifi-outline"
             size={16}
-            color="#F87171"
+            color="rgba(239,68,68,0.7)"
             style={{ marginTop: 2, marginRight: 8 }}
           />
 
@@ -483,7 +501,7 @@ export default function ProfileScreen() {
               style={{
                 fontSize: 13,
                 fontWeight: "600",
-                color: "#F87171",
+                color: "rgba(239,68,68,0.7)",
                 marginBottom: 2,
               }}
             >
@@ -498,12 +516,21 @@ export default function ProfileScreen() {
               {error?.message}
             </Text>
 
-            <TouchableOpacity onPress={() => refetch} style={{ marginTop: 6 }}>
+            <TouchableOpacity
+              onPress={() => {
+                if (!user) {
+                  router.push("/(auth)/login");
+                } else {
+                  refetch();
+                }
+              }}
+              style={{ marginTop: 6 }}
+            >
               <Text
                 style={{
                   fontSize: 12,
                   fontWeight: "600",
-                  color: "#3B82F6",
+                  color: "rgba(239,68,68,0.7)",
                 }}
               >
                 Retry

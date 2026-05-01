@@ -23,6 +23,8 @@ import * as ImagePicker from "expo-image-picker";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
+
+
 const categories = [
   {
     label: "Cover Photo",

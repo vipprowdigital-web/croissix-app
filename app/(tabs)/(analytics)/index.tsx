@@ -363,7 +363,8 @@ export default function AnalyticsScreen() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const { data: user, isLoading: userLoading } = useUser();
+  const user = useSelector((state: RootState) => state.auth.user);
+  // const { data: user, isLoading: userLoading } = useUser();
 
   const [range, setRange] = useState<RangeKey>("90d");
   const [activeChart, setActiveChart] = useState<"area" | "bar">("area");
@@ -444,7 +445,7 @@ export default function AnalyticsScreen() {
   }, [data]);
 
   const s = data?.summary;
-  const isInitial = userLoading || (isLoading && !data);
+  const isInitial = isLoading && !data;
   const locationName =
     user?.googleLocationName ?? "Please connect your business.";
 
@@ -571,8 +572,20 @@ export default function AnalyticsScreen() {
   //   if (loading) return;
   // }, [isActive, isExpired, trialExpired, loading]);
   // if (!isActive) return <SubscriptionGate />;
+  // if (userLoading) {
+  //   return <ActivityIndicator color={link} />;
+  // }
   if (loading) {
-    return <ActivityIndicator color={link} />;
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text
+          className="text-md font-bold text-center"
+          style={{ color: textMuted }}
+        >
+          Loading...
+        </Text>
+      </View>
+    );
   }
   const hasValidSubscription = isActive && !isExpired;
   const canAccess = hasValidSubscription || !trialExpired;
@@ -607,7 +620,9 @@ export default function AnalyticsScreen() {
                 Google Analytics
               </Text>
             </View>
-            <RefreshButton refetch={refetch} isFetching={isFetching} />
+            {user?.googleLocationId && (
+              <RefreshButton refetch={refetch} isFetching={isFetching} />
+            )}
             {/* <Pressable
               className="rounded-lg px-3 flex-row items-center gap-3"
               style={{ backgroundColor: link }}

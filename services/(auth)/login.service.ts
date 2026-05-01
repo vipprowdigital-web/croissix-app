@@ -2,8 +2,9 @@
 
 import { loginApi } from "@/api/auth.api";
 import { saveRefreshToken, saveToken } from "@/services/auth.util";
-import { setAuth } from "@/store/slices/auth.slice";
+import { setAuth, updateUser } from "@/store/slices/auth.slice";
 import { AppDispatch } from "@/store";
+import { queryClient } from "@/providers/queryClient";
 
 export async function handleLogin(
   email: string,
@@ -17,6 +18,7 @@ export async function handleLogin(
     };
 
     const response = await loginApi(payload);
+    // console.log("Response from login api: ", response);
 
     const data = response.data;
     console.log("Response from login api: ", data);
@@ -32,7 +34,8 @@ export async function handleLogin(
         token: data.accessToken,
       }),
     );
-
+    dispatch(updateUser(data.user));
+    // queryClient.removeQueries({ queryKey: ["user-profile"] });
     return { success: true, message: data.message };
   } catch (error: any) {
     return {
