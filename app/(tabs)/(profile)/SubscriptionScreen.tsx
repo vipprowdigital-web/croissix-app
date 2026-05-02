@@ -109,11 +109,14 @@ export default function SubscriptionScreen() {
   // ── Calculate trial days remaining ─────────────────────────────
   const trialDaysRemaining = (() => {
     if (!user?.createdAt) return 0;
+    // console.log("User.created at: ", user?.createdAt);
+
     const diff =
       3 -
       (new Date().getTime() - new Date(user.createdAt).getTime()) /
         (1000 * 60 * 60 * 24);
-    return Math.max(0, Math.ceil(diff));
+    // console.log("Days remaining: ", diff);
+    return Math.max(0, Math.floor(diff));
   })();
 
   async function handleCancel() {
@@ -788,6 +791,7 @@ function TrialActiveView({
 }: any) {
   const [showPayment, setShowPayment] = useState(false);
   const router = useRouter();
+  console.log("Days Remaining: ", daysRemaining);
 
   const openSubscriptionPage = () => {
     const callback = encodeURIComponent("croissix://subscription/success");
