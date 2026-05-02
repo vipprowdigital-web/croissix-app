@@ -15,7 +15,7 @@
       "package": "com.vipprow.croissix",
       "versionCode": 1,
       "adaptiveIcon": {
-        "backgroundColor": "#2a0e45",
+        "backgroundColor": "#18132d",
         "foregroundImage": "./assets/images/logo/app-logo.png"
         // "backgroundImage": "./assets/images/splash.png",
         // "monochromeImage": "./assets/images/splash.png"
@@ -51,7 +51,7 @@
           "image": "./assets/images/logo/croissix-app-logo.png",
           "imageWidth": 200,
           "resizeMode": "cover",
-          "backgroundColor": "#2a0e45"
+          "backgroundColor": "#18132d"
           // "dark": {
           //   "backgroundColor": "#2a0e45"
           // }
