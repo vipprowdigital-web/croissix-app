@@ -336,10 +336,10 @@ export default function AIChat() {
             </>
           ) : (
             <View className="px-5 mt-10 gap-6">
-              {messages.map((m) => (
+              {messages.map((m, idx) => (
                 <>
                   <View
-                    key={m}
+                    key={idx + "id:" + idx}
                     className="flex-row gap-2"
                     style={{
                       alignSelf: m.role === "user" ? "flex-end" : "flex-start",

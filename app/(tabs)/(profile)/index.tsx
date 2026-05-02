@@ -50,6 +50,7 @@ import { updateUser } from "@/store/slices/auth.slice";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/services/(user)/user.service";
 import { queryClient } from "@/providers/queryClient";
+import QRCode from "react-native-qrcode-svg";
 
 type SettingItem = {
   icon: keyof typeof Ionicons.glyphMap;
@@ -238,48 +239,60 @@ type QRPatternProps = {
   size?: number;
 };
 
+// function QRPattern({ url, size = 180 }: QRPatternProps) {
+//   const seed = url.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
+//   const cells = 21;
+//   const cell = size / cells;
+
+//   const grid = Array.from({ length: cells }, (_, r) =>
+//     Array.from({ length: cells }, (_, c) => {
+//       const inTL = r < 7 && c < 7;
+//       const inTR = r < 7 && c >= cells - 7;
+//       const inBL = r >= cells - 7 && c < 7;
+
+//       if (inTL || inTR || inBL) {
+//         const lr = inTL ? r : inTR ? r : r - (cells - 7);
+//         const lc = inTL ? c : inTR ? c - (cells - 7) : c;
+//         if (lr === 0 || lr === 6 || lc === 0 || lc === 6) return true;
+//         if (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4) return true;
+//         return false;
+//       }
+//       return (seed * (r * 31 + c * 17) + r + c) % 3 !== 0;
+//     }),
+//   );
+
+//   return (
+//     <View style={styles.container}>
+//       <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+//         {grid.map((row, r) =>
+//           row.map(
+//             (on, c) =>
+//               on && (
+//                 <Rect
+//                   key={`${r}-${c}`}
+//                   x={c * cell}
+//                   y={r * cell}
+//                   width={cell}
+//                   height={cell}
+//                   fill="#0f172a"
+//                   rx={0.5}
+//                 />
+//               ),
+//           ),
+//         )}
+//       </Svg>
+//     </View>
+//   );
+// }
 function QRPattern({ url, size = 180 }: QRPatternProps) {
-  const seed = url.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
-  const cells = 21;
-  const cell = size / cells;
-
-  const grid = Array.from({ length: cells }, (_, r) =>
-    Array.from({ length: cells }, (_, c) => {
-      const inTL = r < 7 && c < 7;
-      const inTR = r < 7 && c >= cells - 7;
-      const inBL = r >= cells - 7 && c < 7;
-
-      if (inTL || inTR || inBL) {
-        const lr = inTL ? r : inTR ? r : r - (cells - 7);
-        const lc = inTL ? c : inTR ? c - (cells - 7) : c;
-        if (lr === 0 || lr === 6 || lc === 0 || lc === 6) return true;
-        if (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4) return true;
-        return false;
-      }
-      return (seed * (r * 31 + c * 17) + r + c) % 3 !== 0;
-    }),
-  );
-
   return (
     <View style={styles.container}>
-      <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {grid.map((row, r) =>
-          row.map(
-            (on, c) =>
-              on && (
-                <Rect
-                  key={`${r}-${c}`}
-                  x={c * cell}
-                  y={r * cell}
-                  width={cell}
-                  height={cell}
-                  fill="#0f172a"
-                  rx={0.5}
-                />
-              ),
-          ),
-        )}
-      </Svg>
+      <QRCode
+        value={url || "https://example.com"}
+        size={size}
+        color="#0f172a"
+        backgroundColor="white"
+      />
     </View>
   );
 }
