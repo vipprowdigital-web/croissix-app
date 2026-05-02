@@ -694,7 +694,7 @@ export default function ProfileScreen() {
                     </Text>
                   </View>
                 )}
-                {!user?.googleLocationName && (
+                {user && !user?.googleLocationName && (
                   <Pressable
                     style={{
                       backgroundColor: link + "30",
@@ -1057,7 +1057,7 @@ export default function ProfileScreen() {
                     size={18}
                     color="white"
                   />
-                  <Text className="text-white font-bold ml-2">Share QR</Text>
+                  <Text className="text-white font-bold ml-2">Share Link</Text>
                 </TouchableOpacity>
               </View>
 

@@ -5,7 +5,7 @@
     "scheme": "croissix",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo/croissix-app-logo.png",
+    "icon": "./assets/images/logo/app-logo.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -16,7 +16,7 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#2a0e45",
-        "foregroundImage": "./assets/images/logo/croissix-logo-1.png"
+        "foregroundImage": "./assets/images/logo/app-logo.png"
         // "backgroundImage": "./assets/images/splash.png",
         // "monochromeImage": "./assets/images/splash.png"
       },
@@ -38,7 +38,7 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/logo/croissix-logo-1.png",
+      "favicon": "./assets/images/logo/app-logo.png",
       "bundler": "metro"
     },
     "plugins": [
@@ -48,8 +48,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo/croissix-logo-1.png",
-          "imageWidth": "100%",
+          "image": "./assets/images/logo/croissix-app-logo.png",
+          "imageWidth": 200,
           "resizeMode": "cover",
           "backgroundColor": "#2a0e45"
           // "dark": {
