@@ -75,9 +75,9 @@ function Field({
       </Text>
       <View
         className={`flex-row items-center rounded-xl px-3 py-3 border ${
-          error ? "border-red-500" : "border-white/20"
+          error ? "border-red-500" : "border-white/10"
         } bg-white/5`}
-        style={{ backgroundColor: error ? red + "10" : textMuted + "10" }}
+        style={{ backgroundColor: error ? red + "10" : "transparent" }}
       >
         <Icon size={16} color={mutedColor} style={{ marginRight: 8 }} />
         <TextInput

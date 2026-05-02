@@ -236,6 +236,13 @@ export default function AIChat() {
   if (!canAccess)
     return (
       <View className="flex-1 justify-center">
+        <Pressable
+          className="absolute top-20 left-10 p-3 rounded-full"
+          style={{ backgroundColor: textMuted + "30" }}
+          onPress={() => router.back()}
+        >
+          <Ionicons name="chevron-back" color="white" size={18} />
+        </Pressable>
         <SubscriptionGate />
       </View>
     );

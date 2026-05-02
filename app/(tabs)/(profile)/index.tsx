@@ -329,24 +329,25 @@ export default function ProfileScreen() {
 
   const tabs = useMemo(
     () => [
-      {
-        name: "Review QR",
-        color: "#F59E0B",
-        icon: "star-outline",
-        link: locationId
-          ? `https://search.google.com/local/writereview?placeid=${locationId}`
-          : `${base}/review`,
-        bottomText:
-          "Display this on receipts, tables, or counters to collect more reviews.",
-        heading: "Let customers leave a Google review instantly.",
-      },
+      // {
+      //   name: "Review QR",
+      //   color: "#F59E0B",
+      //   icon: "star-outline",
+      //   link: locationId
+      //     ? `https://search.google.com/local/writereview?placeid=${locationId}`
+      //     : `${base}/review`,
+      //   bottomText:
+      //     "Display this on receipts, tables, or counters to collect more reviews.",
+      //   heading: "Let customers leave a Google review instantly.",
+      // },
       {
         name: "Profile QR",
         color: indigo,
         icon: "location-outline",
         link: locationId
-          ? `https://www.google.com/maps/place/?q=place_id:${locationId}`
-          : `${base}/profile`,
+          ? `https://www.google.com/maps/search/?api=1&query=${user.googleLocationName}`
+          : // ? `https://www.google.com/maps/place/?q=place_id:${locationId}`
+            `${base}/profile`,
         bottomText:
           "Share on social media, email signatures, or print materials.",
         heading: "Share your full Google Business listing.",
@@ -356,8 +357,9 @@ export default function ProfileScreen() {
         color: green,
         icon: "globe-outline",
         link: locationId
-          ? `https://www.google.com/maps/dir/?api=1&destination_place_id=${locationId}`
+          ? `https://www.google.com/maps/search/?api=1&query=${user.googleLocationName}`
           : `${base}/directions`,
+        // ? `https://www.google.com/maps/dir/?api=1&destination_place_id=${locationId}`
         bottomText:
           "Print near your entrance or parking area for easy navigation.",
         heading: "Help customers navigate directly to you.",
@@ -730,22 +732,24 @@ export default function ProfileScreen() {
                     </View>
                   </Pressable>
                 )}
-                <Pressable
-                  className="py-3 px-5 rounded-xl flex-row justify-between border"
-                  style={{
-                    backgroundColor: link + "30",
-                    borderColor: link + "30",
-                  }}
-                  onPress={() => sheetRef.current?.expand()}
-                >
-                  <View className="flex-row gap-5">
-                    <Ionicons name="grid-outline" size={20} color={link} />
-                    <Text style={{ color: link }} className="font-bold">
-                      View QR Code
-                    </Text>
-                  </View>
-                  <Ionicons name="chevron-forward" size={20} color={link} />
-                </Pressable>
+                {user.googleLocationId && (
+                  <Pressable
+                    className="py-3 px-5 rounded-xl flex-row justify-between border"
+                    style={{
+                      backgroundColor: link + "30",
+                      borderColor: link + "30",
+                    }}
+                    onPress={() => sheetRef.current?.expand()}
+                  >
+                    <View className="flex-row gap-5">
+                      <Ionicons name="grid-outline" size={20} color={link} />
+                      <Text style={{ color: link }} className="font-bold">
+                        View QR Code
+                      </Text>
+                    </View>
+                    <Ionicons name="chevron-forward" size={20} color={link} />
+                  </Pressable>
+                )}
               </CardContent>
             </Card>
             {/* // ------------------ GOOGLE PROFILE MANAGER CARD ------------------ */}

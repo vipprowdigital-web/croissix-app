@@ -90,7 +90,7 @@ export default function TabsLayout() {
     // Tab bar container
     backgroundColor: theme === "light" ? primary : primaryForeground,
     borderTopWidth: 0,
-    height: Platform.OS === "ios" ? 80 : 90,
+    height: Platform.OS === "ios" ? 80 : 100,
     paddingBottom: Platform.OS === "ios" ? 20 : 15,
     paddingTop: 2,
     // Colors

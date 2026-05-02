@@ -448,28 +448,34 @@ export default function ProfileScreen() {
           )}
         </View>
 
-        <View className="flex-row items-center gap-x-2">
-          <Pressable
-            className="w-10 h-10 rounded-xl items-center justify-center shadow-sm"
-            style={{ backgroundColor: textMuted + "30" }}
-            onPress={() => refetch()}
-            disabled={isLoading}
-          >
-            <RotateCw size={18} color={text} />
-          </Pressable>
+        {user?.googleLocationId && (
+          <View className="flex-row items-center gap-x-2">
+            <Pressable
+              className="w-10 h-10 rounded-xl items-center justify-center shadow-sm"
+              style={{ backgroundColor: textMuted + "30" }}
+              onPress={() => refetch()}
+              disabled={isLoading}
+            >
+              <RotateCw size={18} color={text} />
+            </Pressable>
 
-          <Pressable
-            className="flex-row items-center px-4 py-2.5 rounded-xl shadow-lg gap-2"
-            style={{ backgroundColor: link }}
-            onPress={() => router.push("/CreatePostScreen")}
-          >
-            <Plus size={18} color="white" />
-            <View>
-              <Text className="font-bold text-sm text-white">New Post</Text>
-            </View>
-          </Pressable>
-        </View>
+            <Pressable
+              className="flex-row items-center px-4 py-2.5 rounded-xl shadow-lg gap-2"
+              style={{ backgroundColor: link }}
+              onPress={() => router.push("/CreatePostScreen")}
+            >
+              <Plus size={18} color="white" />
+              <View>
+                <Text className="font-bold text-sm text-white">New Post</Text>
+              </View>
+            </Pressable>
+          </View>
+        )}
       </View>
+
+      {!user?.googleLocationId && (
+        <NotConnectedBanner isDark={theme === "dark"} />
+      )}
 
       {isInitial && (
         <InitialSkeleton isInitial={isInitial} isDark={theme === "dark"} />

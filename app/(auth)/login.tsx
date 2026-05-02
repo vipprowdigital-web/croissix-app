@@ -141,7 +141,7 @@ export default function LoginPage() {
         </Animated.View>
         <Animated.View
           entering={FadeInDown.delay(300).springify().duration(900)}
-          className="absolute inset-0 -bottom-40 items-center justify-center px-6 min-w-lg max-w-lg mx-auto"
+          className="absolute inset-0 -bottom-10 items-center justify-center px-6 min-w-lg max-w-lg mx-auto"
         >
           <View
             className="rounded-3xl shadow-md"
@@ -263,7 +263,7 @@ export default function LoginPage() {
           </View> */}
           <BNAView
             style={{
-              marginTop: 16,
+              marginTop: 25,
               flexDirection: "row",
               justifyContent: "center",
               gap: 6,
